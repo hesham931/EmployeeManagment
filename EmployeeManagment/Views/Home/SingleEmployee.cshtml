@@ -1,0 +1,42 @@
+﻿@model Employee
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .list {
+            margin-left: 150px !important;
+        }
+
+        .card {
+            margin: 50px;
+            padding: 10px;
+            width: 300px !important;
+            background-color: azure
+        }
+    </style>
+</head>
+<div class="list">
+    <div class="card">
+        <img src="~/OIP.jpg" class="card-img-top">
+        <div class="card-body">
+            <p class="card-title">ID : @Model.Id</p>
+            <p class="card-title" id="name">Name : @Model.Name</p>
+            <p class="card-title">Department : @Model.Department</p>
+            <p class="card-title">E-mail : @Model.Email</p>
+            <p class="card-title">Status : @Model.Status</p>
+            <a asp-controller="home" asp-action="Index" class="btn btn-primary">Back</a>
+            <a href="~/EditPage.aspx/id=@Model.Id" class="btn btn-primary">Edit</a>
+            <button class="btn btn-danger" onclick="Delete(@Model.Id)">Delete</button>
+        </div>
+    </div>
+</div>
+<script>
+    function Delete(id) {
+        if (window.confirm(`You want to remove the employee ${document.getElementById("name").innerText} from the list?`)) {
+            let url = "https://localhost:44395/";
+            window.open(`${url}DeleteEmployee/${id}`, '_self');
+        }
+    }
+</script>

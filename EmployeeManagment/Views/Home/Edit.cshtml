@@ -1,0 +1,40 @@
+﻿@model Employee
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="d-flex text-center p-3 mb-2 bg-secondary text-white" style="width:220px;margin:auto;margin-top:50px;border-radius:10px">
+    <form action="~/EnableUpdate/id=@Model.Id" method="post" id="form">
+        <label asp-for="Name">Name</label>
+        <input type="text" asp-for="Name" />
+        <label asp-for="Department">Department</label>
+        <select style="width:100%" class="select" asp-for="Department" asp-items="Html.GetEnumSelectList<Dept>()"></select>
+        <label asp-for="Email">Email</label>
+        <input type="text" asp-for="Email" />
+        <input type="submit" class="bg-success text-white" style="border:none;width:100%;margin-top:15px" />
+    </form>
+</div>
+<script>
+    const form = document.getElementById("form"),
+        Name = form[0].value,
+        Department = form[1].value,
+        Email = form[2].value;
+
+    form.addEventListener("submit", (el) => {
+        el.preventDefault();
+
+        if (form[0].value == Name && form[1].value == Department && form[2].value == Email) {
+            window.alert("You did not make any change on information!");
+            form[0].style = "border:none;border-bottom:solid red 2px";
+            form[1].style = "border:none;border-bottom:solid red 2px;width:100%";
+            form[2].style = "border:none;border-bottom:solid red 2px";
+        }
+        else {
+            form[0].style = "border:none";
+            form[1].style = "border:none";
+            form[2].style = "border:none";
+
+            form.submit();
+        }
+    }, false);
+</script>

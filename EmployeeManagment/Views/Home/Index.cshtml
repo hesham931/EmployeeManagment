@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Employee>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .list {
+            margin-left: 140px;
+        }
+
+        .card {
+            margin: 50px;
+            padding: 10px;
+            width: 300px !important;
+            background-color: azure
+        }
+    </style>
+</head>
+<div class="list">
+    @foreach (var employee in Model)
+    {
+        <div class="card">
+            <img src="OIP.jpg" class="card-img-top" width="100" height="200">
+            <div class="card-body">
+                <h5 class="card-title" id="name">@employee.Name</h5>
+                <a href="getInformation/id=@employee.Id" class="btn btn-primary">View</a>
+                <a href="EditPage.aspx/id=@employee.Id" class="btn btn-primary">Edit</a>
+                <button class="btn btn-danger" id="Delete" onclick="Delete(@employee.Id)">Delete</button>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    const list = document.getElementById("list");
+
+    list.classList.add("active");
+
+    function Delete(id) {
+        if (window.confirm(`You want to remove the employee ${document.getElementById("name").innerText} from the list?`)) {
+            let url = window.location.href;
+            window.open(`${url}DeleteEmployee/${id}`, '_self');
+        }
+    }
+</script>
